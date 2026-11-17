@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}{{ stage.title }} | Medonex Clinical Engine{% endblock %}
+
+{% block content %}
+<div class="detail-page-container">
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumb-strip">
+    <a href="{{ url_for('index') }}" class="crumb-link"><i data-lucide="arrow-left" size="14"></i> Back to Workflow Pipeline</a>
+    <span class="crumb-separator">/</span>
+    <span class="crumb-current">Stage {{ stage.step_num }}</span>
+    <span class="crumb-separator">/</span>
+    <span class="crumb-current" style="color:#fff;">{{ stage.title }}</span>
+  </div>
+
+  <!-- Detail Header Card -->
+  <div class="detail-header-card">
+    <div class="detail-header-left">
+      <div class="detail-tag-row" style="margin-bottom: 0.75rem;">
+        <span class="detail-badge" style="background: {{ stage.badge_color }}22; color: {{ stage.badge_color }}; border: 1px solid {{ stage.badge_color }}44;">
+          {{ stage.badge }}
+        </span>
+        <span class="meta-pill"><i data-lucide="box" size="14"></i> <strong>Open Source Tool:</strong> {{ stage.open_source_tool }}</span>
+        <span class="meta-pill"><i data-lucide="tag" size="14"></i> <strong>Licensing:</strong> {{ stage.cost }}</span>
+        <span class="meta-pill"><i data-lucide="monitor" size="14"></i> <strong>Platform:</strong> Windows Native</span>
+      </div>
+
+      <h1 class="detail-main-title">Step {{ stage.step_num }}: {{ stage.title }}</h1>
+      <p class="detail-main-subtitle">{{ stage.subtitle }}</p>
+    </div>
+
+    <div class="detail-header-right">
+      <a href="{{ url_for('simulator') }}" class="btn-try-sim">
+        <i data-lucide="play" size="16"></i>
+        <span>Test in Simulator</span>
+      </a>
+      <a href="{{ url_for('dossier') }}" class="btn-try-dossier">
+        <i data-lucide="file-check-2" size="16"></i>
+        <span>Inspect Dossier</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Content Split Layout -->
+  <div class="detail-content-layout">
+
+    <!-- Left Main Column -->
+    <div class="detail-main-col">
+
+      <!-- Section 1: Windows Setup Path -->
+      <section class="detail-section-box">
+        <h2 class="section-heading"><i data-lucide="settings" size="20"></i> Step-by-Step Windows Configuration Path</h2>
+        <p class="section-intro">Follow these exact administrative steps inside your Windows environment to configure this capability:</p>
+        
+        <ol class="setup-checklist">
+          {% for step in stage.windows_setup_steps %}
+          <li>
+            <div class="check-dot">{{ loop.index }}</div>
+            <div class="check-text">{{ step }}</div>
+          </li>
+          {% endfor %}
+        </ol>
+
+        <div class="pro-tip-banner" style="margin-top: 1.5rem;">
+          <i data-lucide="monitor" size="20" style="color: #34d399; flex-shrink: 0;"></i>
+          <div>
+            <strong>Windows System Requirements:</strong>
+            <p>{{ stage.windows_requirements }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: How It Works Under the Hood -->
+      <section class="detail-section-box">
+        <h2 class="section-heading"><i data-lucide="cpu" size="20"></i> How It Works (Under the Hood)</h2>
+        <p class="section-text">{{ stage.how_it_works }}</p>
+        
+        <div class="arch-box" style="margin-top: 1.25rem;">
+          <div class="arch-label"><i data-lucide="git-commit" size="14"></i> Internal System Architecture:</div>
+          <div class="arch-code">{{ stage.architecture }}</div>
+        </div>
+      </section>
+
+      <!-- Section 3: Ready-to-Copy Configuration Snippet -->
+      <section class="detail-section-box">
+        <h2 class="section-heading"><i data-lucide="terminal" size="20"></i> Ready-to-Copy Configuration / Syntax Snippet</h2>
+        <div class="code-wrapper">
+          <button class="btn-copy-code" onclick="copyDetailCode()">
+            <i data-lucide="copy" size="14"></i> Copy Code
+          </button>
+          <pre><code id="detailCodeBox">{{ stage.code_snippet }}</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 4: Commercial Value & MedTrainer Parity -->
+      <section class="detail-section-box" style="border-left: 4px solid #10b981;">
+        <h2 class="section-heading" style="color: #34d399;"><i data-lucide="trending-up" size="20"></i> Hospital MSP Commercial Value & MedTrainer Parity</h2>
+        <p class="section-text">{{ stage.commercial_impact }}</p>
+      </section>
+
+    </div>
+
+    <!-- Right Sidebar Column -->
+    <aside class="detail-sidebar">
+      
+      <!-- All Stages Box -->
+      <div class="sidebar-box">
+        <h3 class="sidebar-heading"><i data-lucide="list-ordered" size="16"></i> All 6 Workflow Stages</h3>
+        <nav class="sidebar-nav">
+          {% for sid, sitem in all_stages.items() %}
+          <a href="{{ url_for('stage_detail', stage_id=sid) }}" class="sidebar-item {% if sid == stage.id %}active{% endif %}">
+            <span class="sidebar-num">{{ sitem.step_num }}</span>
+            <div class="sidebar-item-info">
+              <span class="sidebar-item-title">{{ sitem.title }}</span>
+              <span class="sidebar-item-sub">{{ sitem.open_source_tool }}</span>
+            </div>
+          </a>
+          {% endfor %}
+        </nav>
+      </div>
+
+      <!-- Job Card Quick View Box -->
+      <div class="sidebar-box" style="background: rgba(6, 38, 27, 0.9); border-color: rgba(16, 185, 129, 0.3);">
+        <h3 class="sidebar-heading" style="color: #34d399;"><i data-lucide="hospital" size="16"></i> Active Job Requisition</h3>
+        <p style="font-size: 0.88rem; font-weight: 700; color: #fff;">{{ job.client }} — {{ job.title }}</p>
+        <p style="font-size: 0.78rem; color: #94a3b8; margin: 4px 0 10px;">{{ job.unit_profile }} • {{ job.ratios }}</p>
+        <a href="{{ url_for('dossier') }}" class="btn-sidebar-dossier">View Generated Dossier</a>
+      </div>
+
+    </aside>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function copyDetailCode() {
+    const code = document.getElementById('detailCodeBox').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      const btn = document.querySelector('.btn-copy-code');
+      btn.innerHTML = '<i data-lucide="check" size="14"></i> Copied!';
+      lucide.createIcons();
+      setTimeout(() => {
+        btn.innerHTML = '<i data-lucide="copy" size="14"></i> Copy Code';
+        lucide.createIcons();
+      }, 2000);
+    });
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Medonex Clinical | Workflow Pipeline for Novant Health #26-28700{% endblock %}
+
+{% block content %}
+<div class="flowchart-page-wrapper">
+
+  <!-- Hero Header -->
+  <section class="flow-hero">
+    <div class="pill-badge">
+      <i data-lucide="shield-check" size="14"></i>
+      <span>Clinical Assessment & Anti-Cheat Pipeline • Windows Native • $0 Cost</span>
+    </div>
+    
+    <h1 class="flow-title">
+      Pre-Hire Clinical Assessment & <br>
+      <span class="gradient-text">Compliance Verification Engine</span>
+    </h1>
+    
+    <p class="flow-description">
+      An enterprise-grade, 100% free open-source recruitment testing and proctoring pipeline built on native Windows. Converts raw hospital job requirements into targeted clinical assessments, anti-cheat surveillance, and tamper-proof submittal dossiers.
+    </p>
+
+    <!-- Top KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+          <i data-lucide="dollar-sign"></i>
+        </div>
+        <div>
+          <div class="kpi-val">$0.00</div>
+          <div class="kpi-tag">Software Licensing Cost</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(52, 211, 153, 0.15); color: #34d399;">
+          <i data-lucide="monitor"></i>
+        </div>
+        <div>
+          <div class="kpi-val">Windows Native</div>
+          <div class="kpi-tag">Runs on Windows 10/11</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(5, 150, 105, 0.15); color: #059669;">
+          <i data-lucide="award"></i>
+        </div>
+        <div>
+          <div class="kpi-val">MedTrainer Parity</div>
+          <div class="kpi-tag">100% Free Moodle LMS</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+          <i data-lucide="lock"></i>
+        </div>
+        <div>
+          <div class="kpi-val">Triple Anti-Cheat</div>
+          <div class="kpi-tag">SEB + Cam + MediaPipe AI</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INGESTED JOB REQUISITION CARD ================= -->
+  <section class="job-spec-showcase-container">
+    <div class="job-spec-card">
+      <div class="job-spec-header">
+        <div class="job-spec-title-group">
+          <div class="job-live-badge"><span class="live-dot"></span> LIVE MEDONEX REQUISITION</div>
+          <h2>{{ job.title }}</h2>
+          <div class="job-spec-sub">
+            <span><i data-lucide="building" size="14"></i> <strong>Client:</strong> {{ job.client }}</span>
+            <span><i data-lucide="map-pin" size="14"></i> <strong>Location:</strong> {{ job.location }}</span>
+            <span><i data-lucide="hash" size="14"></i> <strong>Job ID:</strong> {{ job.job_id }}</span>
+          </div>
+        </div>
+        <div class="job-spec-pay-box">
+          <div class="pay-amount">$42.62 – $50.37 / hr</div>
+          <div class="pay-sub">Est. $1,813 – $2,417 / wk Gross</div>
+          <div class="contract-tag">13 Weeks • 12h Nights</div>
+        </div>
+      </div>
+
+      <div class="job-spec-details-grid">
+        <div class="spec-detail-cell">
+          <div class="spec-label"><i data-lucide="layout" size="13"></i> Unit Profile & Bed Count</div>
+          <div class="spec-val">{{ job.unit_profile }}</div>
+        </div>
+
+        <div class="spec-detail-cell">
+          <div class="spec-label"><i data-lucide="users" size="13"></i> Acuity & Delegation Ratios</div>
+          <div class="spec-val">{{ job.ratios }}</div>
+        </div>
+
+        <div class="spec-detail-cell" style="grid-column: span 2;">
+          <div class="spec-label" style="color: #34d399;"><i data-lucide="activity" size="13"></i> Cardiac Telemetry Protocol (Crucial Testing Focus)</div>
+          <div class="spec-val">{{ job.telemetry_protocol }}</div>
+        </div>
+
+        <div class="spec-detail-cell">
+          <div class="spec-label" style="color: #f59e0b;"><i data-lucide="alert-circle" size="13"></i> Mandatory Testing Prerequisite</div>
+          <div class="spec-val" style="color: #fef08a; font-weight: 700;">{{ job.testing_prerequisite }}</div>
+        </div>
+
+        <div class="spec-detail-cell">
+          <div class="spec-label"><i data-lucide="cpu" size="13"></i> Hospital Systems & EMR</div>
+          <div class="spec-val">{{ job.systems }}</div>
+        </div>
+
+        <div class="spec-detail-cell" style="grid-column: span 2;">
+          <div class="spec-label"><i data-lucide="shield-alert" size="13"></i> Mandatory Unit Policies & Cancellation Rules</div>
+          <div class="spec-val" style="font-size: 0.85rem; color: #cbd5e1;">{{ job.policies }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6-STAGE SEQUENTIAL PIPELINE ================= -->
+  <section class="pipeline-flow-container">
+    
+    <div class="pipeline-section-title">
+      <h2>End-to-End Operational Workflow Pipeline</h2>
+      <p>Click any stage card below to inspect exact Windows setup click paths, underlying architecture, copy-ready code, and commercial ROI.</p>
+    </div>
+
+    <div class="stages-vertical-stack">
+      {% for sid, stage in stages.items() %}
+      <div class="stage-block">
+        
+        <div class="stage-label-strip">
+          <div class="stage-num">{{ stage.step_num }}</div>
+          <div>
+            <div class="stage-tag-badge">{{ stage.badge }} • {{ stage.cost }}</div>
+            <h3 class="stage-heading">{{ stage.title }}</h3>
+            <p class="stage-subheading">{{ stage.subtitle }}</p>
+          </div>
+        </div>
+
+        <!-- The Clickable Beam Card -->
+        <div class="beam-card" onclick="fetchStageDrawer('{{ stage.id }}')">
+          <div class="beam-inner">
+            <div class="card-meta">
+              <span class="card-step-badge" style="background: {{ stage.badge_color }}22; color: {{ stage.badge_color }};">
+                STEP {{ stage.step_num }} • {{ stage.open_source_tool }}
+              </span>
+              <span class="card-pill">Click to inspect Windows setup</span>
+            </div>
+            <h4 class="card-title">{{ stage.title }}</h4>
+            <p class="card-desc">{{ stage.short_desc }}</p>
+
+            <div class="card-action-bar">
+              <span class="tool-tag"><i data-lucide="box" size="14"></i> {{ stage.open_source_tool }}</span>
+              <button class="btn-inspect"><i data-lucide="arrow-right" size="16"></i></button>
+            </div>
+          </div>
+        </div>
+
+        {% if not loop.last %}
+        <div class="flow-down-arrow"><i data-lucide="arrow-down" size="24"></i></div>
+        {% endif %}
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Final Submission Banner -->
+    <div class="final-handover-banner">
+      <div class="banner-inner">
+        <div class="banner-badge"><i data-lucide="file-check-2" size="16"></i> VMS / MSP SUBMISSION DOSSIER</div>
+        <h3>Ready to Present to Novant Health Hiring Managers</h3>
+        <p>
+          The culmination of this pipeline is a high-fidelity, tamper-proof 2-Page Candidate Verification Dossier ready for immediate client submission.
+        </p>
+        <div class="banner-cta-row">
+          <a href="{{ url_for('dossier') }}" class="btn-dossier-link">
+            <i data-lucide="printer" size="16"></i>
+            <span>Inspect Printable Novant Dossier</span>
+          </a>
+          <a href="{{ url_for('simulator') }}" class="btn-simulator-link">
+            <i data-lucide="play" size="16"></i>
+            <span>Test Anti-Cheat Surveillance Room</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Windows Moodle Setup Playbook | Clinical Engine{% endblock %}
+
+{% block content %}
+<div class="guide-page-container">
+
+  <div class="guide-hero">
+    <div class="pill-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);">
+      <i data-lucide="monitor" size="14"></i>
+      <span>Windows Administrator Setup Playbook</span>
+    </div>
+    <h1 class="guide-title">Complete Windows Setup & Deployment Guide</h1>
+    <p class="guide-sub">
+      Step-by-step instructions to configure a complete, 100% free open-source Moodle LMS instance natively on Windows (no Ubuntu, no virtual machines) for the Novant Health clinical assessment and proctoring engine.
+    </p>
+  </div>
+
+  <div class="guide-sections-list">
+
+    <!-- Step 1: Windows Moodle Server Installation -->
+    <div class="guide-step-card">
+      <div class="guide-step-num">01</div>
+      <div class="guide-step-content">
+        <h3>1. Install Official Moodle Windows Package (1-Click Zip)</h3>
+        <p>Moodle officially provides a complete all-in-one Windows installer package bundled with Apache, PHP 8.1+, and MariaDB.</p>
+        <ol class="setup-checklist" style="margin-top: 1rem;">
+          <li>Download <strong>Moodle 4.3 LTS (Windows installer package)</strong> from <a href="https://download.moodle.org/windows/" target="_blank" style="color:#34d399; text-decoration:underline;">download.moodle.org/windows/</a>.</li>
+          <li>Extract the downloaded zip file directly to <code>C:\MoodleServer</code> on your Windows PC.</li>
+          <li>Double-click <strong><code>C:\MoodleServer\Start Moodle.exe</code></strong>. A small command prompt will open and initialize Apache and MariaDB.</li>
+          <li>Open Chrome or Edge and go to <code>http://localhost</code>. Follow the 5-minute setup wizard to create your admin account.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Step 2: Configure Safe Exam Browser on Windows -->
+    <div class="guide-step-card">
+      <div class="guide-step-num">02</div>
+      <div class="guide-step-content">
+        <h3>2. Configure Safe Exam Browser (Native Moodle Core on Windows)</h3>
+        <p>Safe Exam Browser has an official native Windows executable (<code>SafeExamBrowserInstaller.exe</code>) that locks down Windows 10/11.</p>
+        <ol class="setup-checklist" style="margin-top: 1rem;">
+          <li>Candidate downloads and installs the free Windows client from <a href="https://safeexambrowser.org/download_en.html" target="_blank" style="color:#34d399; text-decoration:underline;">safeexambrowser.org</a>.</li>
+          <li>In your Moodle site (<code>http://localhost</code>): Go to <strong>Site Administration > Plugins > Activity modules > Quiz > Safe Exam Browser</strong>.</li>
+          <li>Ensure 'Safe Exam Browser' is enabled.</li>
+          <li>In your Novant Health quiz settings: Under <strong>Safe Exam Browser</strong>, set 'Require Safe Exam Browser' to <strong>Yes</strong>, enable 'Block dual monitors', and disable 'Allow quitting of SEB'.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Step 3: Install Webcam Proctoring Plugin on Windows -->
+    <div class="guide-step-card">
+      <div class="guide-step-num">03</div>
+      <div class="guide-step-content">
+        <h3>3. Install Webcam Proctoring Plugin (`quizaccess_proctoring`) on Windows</h3>
+        <p>Download the free open-source plugin and place it in your local Windows Moodle directory:</p>
+        <div class="code-wrapper">
+          <pre><code># In Windows File Explorer or PowerShell:
+1. Download the plugin zip from https://moodle.org/plugins/quizaccess_proctoring
+2. Extract the folder into:
+   C:\MoodleServer\server\moodle\mod\quiz\accessrule\proctoring
+3. Open your browser at http://localhost/admin
+4. Moodle will detect the plugin and automatically run the database upgrade.</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Inject Google MediaPipe Eye-Tracking on Windows -->
+    <div class="guide-step-card">
+      <div class="guide-step-num">04</div>
+      <div class="guide-step-content">
+        <h3>4. Inject Client-Side Eye-Gaze Tracking (Google MediaPipe WebAssembly)</h3>
+        <p>Because Google MediaPipe runs inside the candidate's browser via WebAssembly, it requires zero GPU server bills on Windows.</p>
+        <div class="code-wrapper">
+          <pre><code>1. In Moodle (http://localhost), navigate to:
+   Site Administration > Appearance > Additional HTML
+2. Paste the MediaPipe script into the "Within HEAD" box:
+   &lt;script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"&gt;&lt;/script&gt;
+3. Click "Save changes". MediaPipe will automatically activate on all quiz attempt pages.</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5: Install Custom Certificate for Dossier Output -->
+    <div class="guide-step-card">
+      <div class="guide-step-num">05</div>
+      <div class="guide-step-content">
+        <h3>5. Install Custom Certificate (`mod_customcert`) on Windows</h3>
+        <p>Extract the free plugin into your Windows directory to automate PDF dossier generation:</p>
+        <div class="code-wrapper">
+          <pre><code>1. Download mod_customcert from https://moodle.org/plugins/mod_customcert
+2. Extract into:
+   C:\MoodleServer\server\moodle\mod\customcert
+3. Visit http://localhost/admin to complete installation.
+4. Add the Custom Certificate activity to your course with condition: Grade >= 80%.</code></pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

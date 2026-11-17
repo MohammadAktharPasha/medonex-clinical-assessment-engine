@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Live Anti-Cheat Simulator | Novant Health EKG Assessment{% endblock %}
+
+{% block content %}
+<div class="simulator-page-container">
+
+  <!-- Hero Header -->
+  <div class="sim-hero-header">
+    <div class="pill-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);">
+      <i data-lucide="shield-alert" size="14"></i>
+      <span>Interactive Anti-Cheat Surveillance Room • Novant Health #26-28700</span>
+    </div>
+    <h1 class="sim-main-title">Live Clinical Assessment & Anti-Cheat Simulator</h1>
+    <p class="sim-main-desc">
+      Test how Moodle's zero-cost proctoring stack (Safe Exam Browser + Webcam snapshots + Google MediaPipe WASM) reacts when a candidate attempts to switch tabs, look at a phone, or leave their desk during the Novant Health EKG assessment.
+    </p>
+  </div>
+
+  <div class="exam-terminal-frame">
+    
+    <!-- Virtual Top Exam Bar -->
+    <div class="exam-top-bar">
+      <div class="exam-candidate-info">
+        <span class="exam-status-dot"></span>
+        <div>
+          <strong style="color: #fff; font-size: 0.95rem;">Candidate: Alex Johnson, BSN, RN (W2 Verified)</strong>
+          <div style="font-size: 0.75rem; color: #a7f3d0;">Assessment: Novant Health Med-Surg / Telemetry EKG Screen (Req # 26-28700)</div>
+        </div>
+      </div>
+
+      <div class="exam-telemetry-badge">
+        <div class="telemetry-pill">
+          <i data-lucide="clock" size="14"></i>
+          <span>Time Remaining: <strong id="examCountdown" style="color: #34d399;">28:14</strong></span>
+        </div>
+        <div class="telemetry-pill" style="border-color: rgba(16, 185, 129, 0.4); color: #34d399;">
+          <i data-lucide="shield-check" size="14"></i>
+          <span>Proctoring: ACTIVE ($0 Cost)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Content Grid -->
+    <div class="exam-split-grid">
+
+      <!-- Question Panel -->
+      <div class="exam-question-panel">
+        <div class="question-meta-strip">
+          <span class="q-number">QUESTION 14 OF 25 • TIMED</span>
+          <span class="q-type">Clinical Telemetry Scenario (Novant Protocol)</span>
+        </div>
+
+        <h3 class="q-title">
+          You are caring for 6 patients on the Novant Health 24-bed telemetry overflow unit. The remote central telemetry technician calls the nurse station to report that your patient in Bed 14 has suddenly converted from Normal Sinus Rhythm to Atrial Fibrillation with Rapid Ventricular Response (RVR) at a rate of 154 bpm. Bedside BP is 84/52 mmHg with acute diaphoresis. What is your immediate priority action?
+        </h3>
+
+        <div class="q-options-list">
+          <label class="q-option-item">
+            <input type="radio" name="mock_novant_q" value="A">
+            <span class="opt-text"><strong>[A]</strong> Instruct the central telemetry technician to recalibrate lead II electrodes.</span>
+          </label>
+          <label class="q-option-item">
+            <input type="radio" name="mock_novant_q" value="B">
+            <span class="opt-text"><strong>[B]</strong> Activate SBAR escalation to the hospitalist/RRT and prepare for synchronized cardioversion or IV Diltiazem titration.</span>
+          </label>
+          <label class="q-option-item">
+            <input type="radio" name="mock_novant_q" value="C">
+            <span class="opt-text"><strong>[C]</strong> Delegate the CNA to obtain a 12-lead ECG in 30 minutes while you finish charting in Epic.</span>
+          </label>
+          <label class="q-option-item">
+            <input type="radio" name="mock_novant_q" value="D">
+            <span class="opt-text"><strong>[D]</strong> Administer an oral dose of Metoprolol Tartrate from the Pyxis station and re-evaluate in 2 hours.</span>
+          </label>
+        </div>
+
+        <!-- Simulated Cheat Alert Banner -->
+        <div class="live-violation-alert" id="simViolationBanner">
+          <i data-lucide="alert-triangle" size="24" style="color: #f43f5e; flex-shrink: 0;"></i>
+          <div>
+            <strong id="violationTitle" style="color: #fff; font-size: 0.95rem;">CHEATING FLAG DETECTED!</strong>
+            <p id="violationDetail" style="font-size: 0.85rem; color: #fca5a5; margin-top: 2px;">
+              Violation logged with microsecond timestamp.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Virtual Webcam Feed & Telemetry -->
+      <div class="exam-webcam-panel">
+        <div class="webcam-viewport">
+          <div class="cam-rec-indicator">
+            <span class="rec-dot"></span> REC (30s Snapshots)
+          </div>
+          <div class="webcam-graphic-target" id="camGraphicTarget">
+            <i data-lucide="user" size="52" style="color: #34d399;"></i>
+            <div class="gaze-crosshair" id="gazeCrosshair"></div>
+          </div>
+          <div class="cam-caption">
+            <span id="camPoseStatus">Facial Baseline: Locked (Normal)</span>
+          </div>
+        </div>
+
+        <!-- Snapshots Counter -->
+        <div class="cam-snapshots-strip">
+          <div class="snap-stat">
+            <span class="snap-val" id="snapCount">16</span>
+            <span class="snap-lbl">Frames Stored</span>
+          </div>
+          <div class="snap-stat">
+            <span class="snap-val" id="blurCount" style="color: #f87171;">0</span>
+            <span class="snap-lbl">Tab Switches</span>
+          </div>
+          <div class="snap-stat">
+            <span class="snap-val" id="gazeCount" style="color: #fbbf24;">0</span>
+            <span class="snap-lbl">Gaze Flags</span>
+          </div>
+        </div>
+
+        <!-- Live Microsecond Terminal -->
+        <div class="terminal-log-box" id="simTerminalLog">
+          [10:00:00.124] WebRTC camera connected. Resolution: 1920x1080 @ 30fps.<br>
+          [10:00:01.890] Safe Exam Browser hash verified: OK. Dual monitors: BLOCKED (1 screen).<br>
+          [10:00:05.412] Candidate Alex Johnson accepted proctoring terms. Attempt #4912 started.<br>
+          [10:01:30.000] Snapshot #03 saved to /moodledata/proctoring/attempt_4912/frame_03.jpg
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive Simulation Trigger Controls -->
+    <div class="sim-actions-strip">
+      <div class="sim-control-label">Click a button to simulate a candidate cheating action on Windows:</div>
+      <div class="sim-button-group">
+        <button class="btn-cheat-test" onclick="simulateCheatAction('tab')">
+          <i data-lucide="external-link" size="16"></i>
+          <span>Simulate Alt+Tab / Tab Switch (window.onblur)</span>
+        </button>
+        <button class="btn-cheat-test" onclick="simulateCheatAction('gaze')">
+          <i data-lucide="eye-off" size="16"></i>
+          <span>Simulate Looking Down at Mobile Phone</span>
+        </button>
+        <button class="btn-cheat-test" onclick="simulateCheatAction('face')">
+          <i data-lucide="user-x" size="16"></i>
+          <span>Simulate Stepping Away From Desk</span>
+        </button>
+        <button class="btn-cheat-reset" onclick="resetSimDemo()">
+          <i data-lucide="rotate-ccw" size="16"></i>
+          <span>Reset Exam State</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  let totalBlur = 0;
+  let totalGaze = 0;
+  let totalSnaps = 16;
+
+  function simulateCheatAction(type) {
+    const banner = document.getElementById('simViolationBanner');
+    const title = document.getElementById('violationTitle');
+    const detail = document.getElementById('violationDetail');
+    const log = document.getElementById('simTerminalLog');
+    const pose = document.getElementById('camPoseStatus');
+    const crosshair = document.getElementById('gazeCrosshair');
+    const time = new Date().toLocaleTimeString();
+
+    banner.style.display = 'flex';
+
+    if (type === 'tab') {
+      totalBlur++;
+      document.getElementById('blurCount').textContent = totalBlur;
+      title.textContent = `VIOLATION #${totalBlur}: Tab-Switching Detected (window.onblur)`;
+      detail.textContent = `Candidate left exam window at ${time}. Hook: window.onblur event recorded in table mdl_logstore_standard_log.`;
+      log.innerHTML += `<br><span style="color:#f87171;">[${time}] CRITICAL: window.onblur event triggered! Candidate switched window/tab. Incident logged.</span>`;
+      pose.textContent = "Window Focus: LOST";
+      pose.style.color = "#f87171";
+    } else if (type === 'gaze') {
+      totalGaze++;
+      document.getElementById('gazeCount').textContent = totalGaze;
+      title.textContent = `FLAG #${totalGaze}: Off-Screen Eye Gaze / Phone Check Detected`;
+      detail.textContent = `Google MediaPipe iris tracking detected downward head pitch > 38 degrees at ${time}.`;
+      log.innerHTML += `<br><span style="color:#fbbf24;">[${time}] WARNING: MediaPipe Iris Vector Deviation > 38° (> 4.2 sec). Candidate looking down at desk/phone.</span>`;
+      pose.textContent = "Iris Gaze: OFF-SCREEN (Looking Down)";
+      pose.style.color = "#fbbf24";
+      crosshair.style.transform = "translate(-50%, 25px)";
+      crosshair.style.borderColor = "#fbbf24";
+    } else if (type === 'face') {
+      title.textContent = `CRITICAL ALERT: Candidate Absence / No Face in Frame`;
+      detail.textContent = `Webcam stream reports 0 faces detected at ${time}. Candidate stepped away from testing area.`;
+      log.innerHTML += `<br><span style="color:#ef4444;">[${time}] HIGH SEVERITY: 0 faces detected in webcam frame! Candidate not at workstation.</span>`;
+      pose.textContent = "Face Presence: ABSENT (0 Faces)";
+      pose.style.color = "#ef4444";
+    }
+
+    log.scrollTop = log.scrollHeight;
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function resetSimDemo() {
+    totalBlur = 0;
+    totalGaze = 0;
+    document.getElementById('blurCount').textContent = "0";
+    document.getElementById('gazeCount').textContent = "0";
+    document.getElementById('simViolationBanner').style.display = 'none';
+    document.getElementById('camPoseStatus').textContent = "Facial Baseline: Locked (Normal)";
+    document.getElementById('camPoseStatus').style.color = "#34d399";
+    const crosshair = document.getElementById('gazeCrosshair');
+    crosshair.style.transform = "translate(-50%, -50%)";
+    crosshair.style.borderColor = "#10b981";
+    document.getElementById('simTerminalLog').innerHTML = `
+      [10:00:00.124] WebRTC camera connected. Resolution: 1920x1080 @ 30fps.<br>
+      [10:00:01.890] Safe Exam Browser hash verified: OK. Dual monitors: BLOCKED (1 screen).<br>
+      [10:00:05.412] Candidate Alex Johnson accepted proctoring terms. Attempt #4912 started.
+    `;
+    if (window.lucide) lucide.createIcons();
+  }
+</script>
+{% endblock %}

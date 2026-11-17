@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}Candidate Verification Dossier | Novant Health #26-28700{% endblock %}
+
+{% block content %}
+<div class="dossier-page-container">
+
+  <!-- Action Bar -->
+  <div class="dossier-actions-bar">
+    <div>
+      <h1 style="color: #fff; font-size: 1.5rem; font-weight: 800;">Candidate Verification Dossier</h1>
+      <p style="color: #a7f3d0; font-size: 0.85rem;">Generated for Novant Health Requisition # 26-28700 • Fieldglass / MSP Submittal Ready</p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <button class="btn-dossier-print" onclick="window.print()">
+        <i data-lucide="printer" size="16"></i>
+        <span>Print / Save as PDF</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- The Actual Printable White/Clean Paper Dossier -->
+  <div class="paper-dossier-sheet" id="printableDossier">
+    
+    <!-- Header Strip -->
+    <div class="sheet-header">
+      <div class="sheet-brand">
+        <div class="sheet-logo-placeholder">MEDO<span style="color:#059669;">NEX</span> HEALTHCARE</div>
+        <div class="sheet-sub">Clinical Sourcing & Verified Credentialing Division • Direct Sourcing Submission</div>
+      </div>
+      <div class="sheet-score-box">
+        <div class="sheet-score-num">94%</div>
+        <div class="sheet-score-label">NOVANT EKG TELEMETRY SCORE</div>
+        <div class="sheet-trust-tag">PROCTORING TRUST: 100% (PASS)</div>
+      </div>
+    </div>
+
+    <!-- Candidate Meta Grid -->
+    <div class="sheet-section-title">1. CANDIDATE & POSITION DETAILS</div>
+    <div class="sheet-info-grid">
+      <div class="info-cell">
+        <label>Candidate Name:</label>
+        <strong>Alex Johnson, BSN, RN</strong>
+      </div>
+      <div class="info-cell">
+        <label>Target Hospital Client:</label>
+        <strong>Novant Health (Winston Salem, NC)</strong>
+      </div>
+      <div class="info-cell">
+        <label>Target Role / Unit:</label>
+        <strong>RN Med-Surg / Telemetry (24-Bed Overflow)</strong>
+      </div>
+      <div class="info-cell">
+        <label>Requisition Code:</label>
+        <strong>Job # 26-28700 (13 Weeks • 12h Nights)</strong>
+      </div>
+      <div class="info-cell">
+        <label>Work Authorization:</label>
+        <strong>US Permanent Resident (Green Card) / W2</strong>
+      </div>
+      <div class="info-cell">
+        <label>State RN Licensure:</label>
+        <strong>North Carolina / eNLC Compact (#RN-491823)</strong>
+      </div>
+    </div>
+
+    <!-- Technical Competency Breakdown -->
+    <div class="sheet-section-title" style="margin-top: 1.5rem;">2. CLINICAL TELEMETRY COMPETENCY EVALUATION (BENCHMARK: 80%)</div>
+    <table class="sheet-table">
+      <thead>
+        <tr>
+          <th>Clinical Competency Domain</th>
+          <th>Questions</th>
+          <th>Score</th>
+          <th>Proficiency Level</th>
+          <th>Benchmark Evaluation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cardiac Dysrhythmia Recognition & Intervention</strong></td>
+          <td>10 Questions</td>
+          <td><strong style="color: #059669;">96%</strong></td>
+          <td><span class="badge-high">Expert (Top 2%)</span></td>
+          <td>Exceeds Novant remote tech alert protocol</td>
+        </tr>
+        <tr>
+          <td><strong>1:6 Triage & CNA Delegation (1:12 Ratio)</strong></td>
+          <td>6 Questions</td>
+          <td><strong style="color: #059669;">92%</strong></td>
+          <td><span class="badge-high">Advanced</span></td>
+          <td>Demonstrates safe delegation under unit acuity</td>
+        </tr>
+        <tr>
+          <td><strong>Pyxis Dispensing & High-Alert Cardiac Drips</strong></td>
+          <td>5 Questions</td>
+          <td><strong style="color: #059669;">94%</strong></td>
+          <td><span class="badge-high">Expert</span></td>
+          <td>Accurate high-alert titration calculations</td>
+        </tr>
+        <tr>
+          <td><strong>Epic Flowsheet Charting & SBAR Escalation</strong></td>
+          <td>4 Questions</td>
+          <td><strong style="color: #059669;">95%</strong></td>
+          <td><span class="badge-high">Expert</span></td>
+          <td>Clear clinical handoff & rapid response communication</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Clinical Skills Checklist -->
+    <div class="sheet-section-title" style="margin-top: 1.5rem;">3. NOVANT-SPECIFIC CLINICAL SKILLS CHECKLIST (1–4 SCALE)</div>
+    <table class="sheet-table">
+      <thead>
+        <tr>
+          <th>Core Telemetry Procedure / Skill</th>
+          <th>Self-Rating (1 to 4)</th>
+          <th>Proficiency Meaning</th>
+          <th>Years Practiced</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lethal Dysrhythmia Interpretation (V-Tach, V-Fib, Asystole)</strong></td>
+          <td><strong style="color: #059669;">Level 4</strong></td>
+          <td>Proficient — Resource to others</td>
+          <td>4+ Years</td>
+        </tr>
+        <tr>
+          <td><strong>5-Lead Telemetry Electrode Placement & Troubleshooting</strong></td>
+          <td><strong style="color: #059669;">Level 4</strong></td>
+          <td>Proficient — Resource to others</td>
+          <td>4+ Years</td>
+        </tr>
+        <tr>
+          <td><strong>High-Alert IV Piggyback Titration (Diltiazem, Amiodarone)</strong></td>
+          <td><strong style="color: #059669;">Level 4</strong></td>
+          <td>Proficient — Resource to others</td>
+          <td>4+ Years</td>
+        </tr>
+        <tr>
+          <td><strong>Sister-Unit Floating Adaptability (Med-Surg Units)</strong></td>
+          <td><strong style="color: #0284c7;">Level 3</strong></td>
+          <td>Competent — Performs independently</td>
+          <td>3 Years</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Compliance & Unit Policies Attestation -->
+    <div class="sheet-section-title" style="margin-top: 1.5rem;">4. MEDTRAINER-PARITY COMPLIANCE & UNIT POLICY ATTESTATIONS</div>
+    <div class="sheet-audit-box">
+      <div class="audit-stat-item">
+        <div class="audit-stat-title">AHA Basic Life Support (BCLS / BLS)</div>
+        <div class="audit-stat-detail">American Heart Association Healthcare Provider card verified via e-verify.</div>
+        <div class="audit-status-tag" style="color: #059669;">VERIFIED ACTIVE (Exp: Nov 2027)</div>
+      </div>
+
+      <div class="audit-stat-item">
+        <div class="audit-stat-title">Core Mandatory Modules (HIPAA & OSHA)</div>
+        <div class="audit-stat-detail">Completed annual Joint Commission HIPAA Security & OSHA Bloodborne Pathogens courses.</div>
+        <div class="audit-status-tag" style="color: #059669;">CERTIFICATE #MEDO-NOV-9412</div>
+      </div>
+
+      <div class="audit-stat-item" style="grid-column: span 2;">
+        <div class="audit-stat-title">Novant Health Unit Policy Digital Sign-Off</div>
+        <div class="audit-stat-detail">Candidate digitally signed agreement adhering to: (1) Mandatory sister-unit floating, (2) Navy Blue scrubs, (3) RTO post-booking prohibition and DNR penalty, and (4) 36 hours preceptorship.</div>
+        <div class="audit-status-tag" style="color: #059669;">ATTESTED & CONFIRMED (Signed 11-16-2026)</div>
+      </div>
+    </div>
+
+    <!-- Anti-Cheat Telemetry Audit Trail -->
+    <div class="sheet-section-title" style="margin-top: 1.5rem;">5. PROCTORING INTEGRITY & TELEMETRY AUDIT TRAIL ($0 COST)</div>
+    <div class="sheet-audit-box">
+      <div class="audit-stat-item">
+        <div class="audit-stat-title">Safe Exam Browser OS Lockdown</div>
+        <div class="audit-stat-detail">Operating system lockdown enforced. Alt+Tab, secondary monitors, and background apps strictly blocked.</div>
+        <div class="audit-status-tag" style="color: #059669;">STATUS: 0 TAB SWITCHES DETECTED</div>
+      </div>
+
+      <div class="audit-stat-item">
+        <div class="audit-stat-title">Continuous WebRTC Camera Surveillance</div>
+        <div class="audit-stat-detail">16 periodic frames captured every 30s. Facial recognition confirmed 100% identity match against driver's license.</div>
+        <div class="audit-status-tag" style="color: #059669;">STATUS: VERIFIED (0 Proxies)</div>
+      </div>
+    </div>
+
+    <!-- Recruiter Signoff -->
+    <div class="sheet-footer-signoff">
+      <div class="signoff-box">
+        <div><strong>Screening Completed By:</strong> Medonex Clinical Talent Verification Division</div>
+        <div><strong>Verification Status:</strong> CLEARED & READY FOR NOVANT HEALTH SUBMISSION</div>
+      </div>
+      <div class="signoff-stamp">
+        MSP SUBMISSION READY
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

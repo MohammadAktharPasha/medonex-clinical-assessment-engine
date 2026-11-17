@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Medonex Clinical | Healthcare Assessments & Anti-Cheat Engine{% endblock %}</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Emerald Green Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="{{ url_for('index') }}" class="brand-link">
+        <div class="brand-badge-icon">
+          <i data-lucide="shield-plus" class="brand-icon"></i>
+        </div>
+        <div class="brand-text-block">
+          <span class="brand-name">Medonex<span class="brand-highlight">Clinical</span></span>
+          <span class="brand-sub">Clinical Assessments, Proctoring & Compliance Engine • Windows Native</span>
+        </div>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="{{ url_for('index') }}" class="nav-item {% if request.path == '/' %}active{% endif %}">
+          <i data-lucide="git-merge" size="16"></i>
+          <span>Workflow Pipeline</span>
+        </a>
+        <a href="{{ url_for('simulator') }}" class="nav-item {% if request.path == '/simulator' %}active{% endif %}">
+          <i data-lucide="play-circle" size="16"></i>
+          <span>Anti-Cheat Simulator</span>
+        </a>
+        <a href="{{ url_for('dossier') }}" class="nav-item {% if request.path == '/dossier' %}active{% endif %}">
+          <i data-lucide="file-check-2" size="16"></i>
+          <span>Novant Client Dossier</span>
+        </a>
+        <a href="{{ url_for('windows_guide') }}" class="nav-item {% if request.path == '/windows-guide' %}active{% endif %}">
+          <i data-lucide="monitor" size="16"></i>
+          <span>Windows Admin Playbook</span>
+        </a>
+      </nav>
+
+      <div class="nav-right">
+        <a href="{{ url_for('simulator') }}" class="btn-nav-cta">
+          <i data-lucide="zap" size="15"></i>
+          <span>Launch Simulator</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="page-body">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <strong>Medonex Clinical Testing & Compliance Engine</strong> • 100% Free & Open-Source Architecture on Windows
+      </div>
+      <div class="footer-right">
+        Engineered for US Healthcare Staffing & Hospital MSP Submittals • Novant Health Requisition #26-28700
+      </div>
+    </div>
+  </footer>
+
+  <!-- Detail Slide-Over Drawer (Global for AJAX Inspection on Index Page) -->
+  <div class="drawer-backdrop" id="globalDrawerBackdrop" onclick="closeGlobalDrawer(event)">
+    <div class="drawer-dialog" id="globalDrawerDialog">
+      <div class="drawer-header">
+        <button class="drawer-close-btn" onclick="closeGlobalDrawerDirect()">
+          <i data-lucide="x" size="20"></i>
+        </button>
+        <div class="drawer-top-meta">
+          <span class="drawer-badge" id="gDrawerBadge">STAGE</span>
+          <span class="drawer-tool" id="gDrawerTool">Moodle Core</span>
+          <span class="drawer-cost" id="gDrawerCost">$0 Software Cost</span>
+        </div>
+        <h2 class="drawer-heading" id="gDrawerTitle">Stage Title</h2>
+        <div class="drawer-subheading" id="gDrawerSubtitle">Stage Subtitle & Scope</div>
+      </div>
+
+      <div class="drawer-tabs-strip">
+        <button class="d-tab-btn active" id="btnDTabSetup" onclick="switchDrawerSubTab('setup')">Windows Setup Path</button>
+        <button class="d-tab-btn" id="btnDTabWorks" onclick="switchDrawerSubTab('works')">How It Works</button>
+        <button class="d-tab-btn" id="btnDTabCode" onclick="switchDrawerSubTab('code')">Code & GIFT Syntax</button>
+        <button class="d-tab-btn" id="btnDTabValue" onclick="switchDrawerSubTab('value')">ROI & MedTrainer Parity</button>
+      </div>
+
+      <div class="drawer-body-scroll">
+        <!-- SUB-TAB 1: SETUP -->
+        <div class="d-tab-pane active" id="paneDTabSetup">
+          <h4 class="d-section-title"><i data-lucide="settings" size="16"></i> Step-by-Step Windows Click Path</h4>
+          <ol class="d-steps-list" id="gDrawerSetupList"></ol>
+          <div class="d-callout-box" id="gDrawerReqBox">
+            <strong>Windows System Requirements:</strong>
+            <p id="gDrawerReqText" style="margin-top: 4px; color: #a7f3d0; font-family: var(--font-mono); font-size: 0.85rem;"></p>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 2: HOW IT WORKS -->
+        <div class="d-tab-pane" id="paneDTabWorks">
+          <h4 class="d-section-title"><i data-lucide="cpu" size="16"></i> Architectural Flow & Mechanics</h4>
+          <p class="d-text-block" id="gDrawerWorksText"></p>
+          <div class="d-callout-box" style="border-left-color: #34d399; margin-top: 1rem;">
+            <strong>Under-the-Hood Architecture:</strong>
+            <p id="gDrawerArchText" style="margin-top: 4px; font-family: var(--font-mono); font-size: 0.85rem; color: #6ee7b7;"></p>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 3: CODE -->
+        <div class="d-tab-pane" id="paneDTabCode">
+          <h4 class="d-section-title"><i data-lucide="terminal" size="16"></i> Ready-to-Copy Configuration & GIFT Questions</h4>
+          <div class="d-code-box">
+            <button class="d-copy-btn" onclick="copyDrawerCode()">
+              <i data-lucide="copy" size="13"></i> Copy Code
+            </button>
+            <pre><code id="gDrawerCodeBlock"></code></pre>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 4: VALUE -->
+        <div class="d-tab-pane" id="paneDTabValue">
+          <h4 class="d-section-title"><i data-lucide="trending-up" size="16"></i> Hospital MSP Commercial Value</h4>
+          <p class="d-text-block" id="gDrawerValueText"></p>
+        </div>
+      </div>
+
+      <div class="drawer-footer-actions">
+        <a href="#" id="gDrawerFullPageLink" class="btn-open-full-page">
+          <span>Open Full Dedicated Stage Guide</span>
+          <i data-lucide="arrow-up-right" size="16"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
