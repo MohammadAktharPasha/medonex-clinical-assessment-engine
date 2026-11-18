@@ -47,7 +47,11 @@
         </a>
         <a href="{{ url_for('windows_guide') }}" class="nav-item {% if request.path == '/windows-guide' %}active{% endif %}">
           <i data-lucide="monitor" size="16"></i>
-          <span>Windows Admin Playbook</span>
+          <span>Windows Playbook</span>
+        </a>
+        <a href="{{ url_for('gap_analysis') }}" class="nav-item {% if request.path == '/gap-analysis' %}active{% endif %}">
+          <i data-lucide="bar-chart-3" size="16"></i>
+          <span>MedTrainer Gap & Roadmap</span>
         </a>
       </nav>
 

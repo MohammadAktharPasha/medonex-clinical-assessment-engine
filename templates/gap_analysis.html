@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}Medonex vs. MedTrainer — Gap Analysis & Build Roadmap{% endblock %}
+
+{% block content %}
+<div class="gap-page-container">
+
+  <!-- Hero Header -->
+  <section class="gap-hero">
+    <div class="pill-badge">
+      <i data-lucide="bar-chart-3" size="14"></i>
+      <span>Medonex vs. MedTrainer Audit • Nov 17, 2026 • Authored by Ravi Chander</span>
+    </div>
+
+    <h1 class="flow-title">
+      MedTrainer Parity <br>
+      <span class="gradient-text">Gap Analysis & Build Roadmap</span>
+    </h1>
+
+    <p class="flow-description">
+      A feature-by-feature technical audit comparing all <strong>19 MedTrainer capabilities</strong> against Medonex’s live codebase and Jira backlog, paired with critical security findings and the 6-step execution roadmap.
+    </p>
+
+    <!-- Scorecard KPI Grid -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+          <i data-lucide="check-circle-2"></i>
+        </div>
+        <div>
+          <div class="kpi-val">0 / 19</div>
+          <div class="kpi-tag">Fully Built Today</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">
+          <i data-lucide="clock"></i>
+        </div>
+        <div>
+          <div class="kpi-val">5 / 19</div>
+          <div class="kpi-tag">Partly Built (Candidate Side)</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">
+          <i data-lucide="clipboard-list"></i>
+        </div>
+        <div>
+          <div class="kpi-val">12 / 19</div>
+          <div class="kpi-tag">Planned in Jira (To Do)</div>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-icon-box" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">
+          <i data-lucide="help-circle"></i>
+        </div>
+        <div>
+          <div class="kpi-val">2 / 19</div>
+          <div class="kpi-tag">No Ticket (Scope Decision)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CRITICAL CODE FINDINGS (RED FLAGS) ================= -->
+  <section class="gap-section">
+    <div class="gap-section-header">
+      <div class="gap-section-badge danger"><i data-lucide="shield-alert" size="14"></i> CODE AUDIT FINDINGS (DEV BRANCHES)</div>
+      <h2>3 Critical Security & Operational Blockers to Fix First</h2>
+      <p>Shallow audit of the service Dev branch and UI dev branch uncovered three P0 issues that change the build plan before any employer screen ships.</p>
+    </div>
+
+    <div class="findings-grid">
+      {% for item in findings %}
+      <div class="finding-card">
+        <div class="finding-severity">{{ item.severity }}</div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.detail }}</p>
+        <div class="ticket-chips-row">
+          {% for tk in item.tickets %}
+          <a href="{{ jira_base }}{{ tk }}" target="_blank" class="jira-chip danger-chip">
+            <i data-lucide="external-link" size="12"></i> {{ tk }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ================= INTERACTIVE 19-FEATURE GAP MATRIX ================= -->
+  <section class="gap-section">
+    <div class="gap-section-header">
+      <div class="gap-section-badge"><i data-lucide="table-2" size="14"></i> FEATURE-BY-FEATURE COMPARISON</div>
+      <h2>19 MedTrainer Features vs. Medonex Today</h2>
+      <p>Filter by status or search across all 19 MedTrainer deck capabilities and jump straight to the mapped Jira tickets.</p>
+    </div>
+
+    <!-- Filter & Search Controls -->
+    <div class="gap-controls-bar">
+      <div class="gap-filter-pills">
+        <button class="gap-filter-btn active" onclick="filterGapTable('All', this)">All Features (19)</button>
+        <button class="gap-filter-btn" onclick="filterGapTable('Partial', this)">Partial (5)</button>
+        <button class="gap-filter-btn" onclick="filterGapTable('Planned', this)">Planned (12)</button>
+        <button class="gap-filter-btn" onclick="filterGapTable('No ticket', this)">No Ticket (2)</button>
+      </div>
+      <div class="gap-search-box">
+        <i data-lucide="search" size="15"></i>
+        <input type="text" id="gapSearchInput" placeholder="Search feature, status, or MEDO ticket..." oninput="searchGapTable()">
+      </div>
+    </div>
+
+    <!-- Responsive Matrix Table -->
+    <div class="gap-table-card">
+      <table class="gap-table" id="gapMatrixTable">
+        <thead>
+          <tr>
+            <th style="width: 48px;">#</th>
+            <th style="width: 34%;">MedTrainer Feature (Deck Slide)</th>
+            <th style="width: 38%;">Medonex Today</th>
+            <th style="width: 110px;">Status</th>
+            <th style="width: 170px;">Jira Tickets</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in features %}
+          <tr class="gap-row" data-status="{{ row.status }}">
+            <td class="row-num">{{ row.num }}</td>
+            <td class="row-feature"><strong>{{ row.feature }}</strong></td>
+            <td class="row-today">{{ row.medonex_today }}</td>
+            <td>
+              {% if row.status == 'Partial' %}
+                <span class="status-pill status-partial">Partial</span>
+              {% elif row.status == 'Planned' %}
+                <span class="status-pill status-planned">Planned</span>
+              {% else %}
+                <span class="status-pill status-noticket">No ticket</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="ticket-chips-row">
+                {% if row.tickets %}
+                  {% for tk in row.tickets %}
+                  <a href="{{ jira_base }}{{ tk }}" target="_blank" class="jira-chip">{{ tk }}</a>
+                  {% endfor %}
+                {% else %}
+                  <span style="font-size: 0.78rem; color: #94a3b8;">None found</span>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= RECOMMENDED 6-STEP BUILD ROADMAP ================= -->
+  <section class="gap-section">
+    <div class="gap-section-header">
+      <div class="gap-section-badge"><i data-lucide="route" size="14"></i> EXECUTION SEQUENCE</div>
+      <h2>Recommended 6-Step Build Order</h2>
+      <p>Prioritized sequence ensuring P0 security and tenant isolation land before employer rosters, credential dashboards, verifications, LMS, and AI Coach.</p>
+    </div>
+
+    <div class="roadmap-timeline">
+      {% for phase in roadmap %}
+      <div class="roadmap-card">
+        <div class="roadmap-step-badge">{{ phase.step }}</div>
+        <div class="roadmap-card-body">
+          <div class="roadmap-meta-top">
+            <span class="roadmap-priority-pill">{{ phase.priority }}</span>
+            <div class="ticket-chips-row">
+              {% for tk in phase.tickets %}
+              <a href="{{ jira_base }}{{ tk }}" target="_blank" class="jira-chip">{{ tk }}</a>
+              {% endfor %}
+            </div>
+          </div>
+          <h3>{{ phase.title }}</h3>
+          <p class="roadmap-why"><strong>Why it matters:</strong> {{ phase.why }}</p>
+          <ul class="roadmap-action-list">
+            {% for act in phase.actions %}
+            <li><i data-lucide="arrow-right-circle" size="15"></i> <span>{{ act }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ================= REUSABLE MEDONEX ASSETS ================= -->
+  <section class="gap-section">
+    <div class="gap-section-header">
+      <div class="gap-section-badge"><i data-lucide="recycle" size="14"></i> EXTEND, DON'T REBUILD</div>
+      <h2>What Medonex Already Has Ready to Reuse</h2>
+      <p>Existing candidate-side infrastructure and Optevus ports accelerate delivery across Priorities 1–3.</p>
+    </div>
+
+    <div class="reusable-grid">
+      {% for asset in reusable %}
+      <div class="reusable-card">
+        <div class="reusable-icon">
+          <i data-lucide="{{ asset.icon }}" size="20"></i>
+        </div>
+        <h4>{{ asset.title }}</h4>
+        <p>{{ asset.desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ================= OPEN LEADERSHIP DECISION ================= -->
+  <section class="decision-callout-box">
+    <div class="decision-header">
+      <div class="gap-section-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35);">
+        <i data-lucide="git-fork" size="14"></i> OPEN PRODUCT SCOPE DECISION (PRIORITY 4)
+      </div>
+      <h2>Target Segment Choice: Staffing Clients Only vs. Hospital Credentialing Offices</h2>
+      <p>This single decision determines whether the two untracked rows (#14 Payer Enrollment & #15 Privileges/Appointments) are scoped into Jira at all.</p>
+    </div>
+
+    <div class="decision-options-grid">
+      <div class="decision-opt-card recommended">
+        <div class="opt-tag">PATH A • RECOMMENDED CORE FOCUS</div>
+        <h4>Employer-Side Compliance for Staffing Clients Only</h4>
+        <p>Focus on Travel Nurses, Allied Staffing Agencies, and Hospital MSP compliance packets. <strong>Skip Features #14 & #15 entirely</strong> and ship faster on Priorities 1–3.</p>
+      </div>
+
+      <div class="decision-opt-card">
+        <div class="opt-tag" style="color: #fbbf24; background: rgba(245, 158, 11, 0.15);">PATH B • EXPANDED ENTERPRISE SCOPE</div>
+        <h4>Hospital Medical Staff & Provider Credentialing Offices Too</h4>
+        <p>Target hospital credentialing offices managing billing physicians/NPs/PAs. <strong>Requires creating new Jira tickets</strong> for Payer Enrollment, Privileges/Appointments, Locations Setup, and Custom Provider Fields.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  let activeStatusFilter = 'All';
+
+  function filterGapTable(status, btnEl) {
+    activeStatusFilter = status;
+    document.querySelectorAll('.gap-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    applyGapFilters();
+  }
+
+  function searchGapTable() {
+    applyGapFilters();
+  }
+
+  function applyGapFilters() {
+    const query = (document.getElementById('gapSearchInput').value || '').toLowerCase().trim();
+    const rows = document.querySelectorAll('#gapMatrixTable tbody tr.gap-row');
+
+    rows.forEach(row => {
+      const rowStatus = row.getAttribute('data-status');
+      const rowText = row.textContent.toLowerCase();
+      const matchesStatus = (activeStatusFilter === 'All') || (rowStatus === activeStatusFilter);
+      const matchesQuery = !query || rowText.includes(query);
+      row.style.display = (matchesStatus && matchesQuery) ? '' : 'none';
+    });
+  }
+</script>
+{% endblock %}

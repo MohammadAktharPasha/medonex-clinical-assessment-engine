@@ -259,6 +259,261 @@ Target Role: Registered Nurse / MS / Telemetry (Night Shift)
     }
 }
 
+# Medonex vs MedTrainer — Gap Analysis & Build Roadmap (Nov 17, 2026 · Ravi Chander)
+JIRA_BASE_URL = "https://team-1624554005365.atlassian.net/browse/"
+
+GAP_FEATURES = [
+    {
+        "num": 1,
+        "feature": "Three logins: Employer Admin, Employer, Employee, with restricted access (Slide 3)",
+        "medonex_today": "Only Recruiter and Applicant (candidate) exist. No role policies in the API code.",
+        "status": "Planned",
+        "tickets": ["MEDO-1592", "MEDO-1313"]
+    },
+    {
+        "num": 2,
+        "feature": "SSO at login: MedTrainer, ADP, UKG, plus password and forgot-password (Login screen)",
+        "medonex_today": "Azure AD B2C sign-in exists. No ADP or UKG federation.",
+        "status": "Partial",
+        "tickets": ["MEDO-1592"]
+    },
+    {
+        "num": 3,
+        "feature": "Employee Center: roster with Active / Inactive / Deactivated counts, advanced search (Slide 4)",
+        "medonex_today": "No employer-side roster. Closest is the recruiter candidate list.",
+        "status": "Planned",
+        "tickets": ["MEDO-1593"]
+    },
+    {
+        "num": 4,
+        "feature": "Bulk employee import by XLSX (Slide 4)",
+        "medonex_today": "XLSX bulk upload exists only for jobs in the recruiter job view.",
+        "status": "Planned",
+        "tickets": ["MEDO-1593"]
+    },
+    {
+        "num": 5,
+        "feature": "New-employee enrollment form: name, DOB, email, location, department, position, hire date, access level, welcome email (Slide 5)",
+        "medonex_today": "Candidate registration covers name, DOB, email, address. No department, division, position, hire date, access level, employee category or internal ID.",
+        "status": "Planned",
+        "tickets": ["MEDO-1593"]
+    },
+    {
+        "num": 6,
+        "feature": "Activate / deactivate / reactivate with credentialing-location assignment and reason (Slide 6)",
+        "medonex_today": "Recruiter has an IsActive flag only. Nothing for candidates or employees.",
+        "status": "Planned",
+        "tickets": ["MEDO-1594"]
+    },
+    {
+        "num": 7,
+        "feature": "Profile document dashboard: Missing, Active, Expired, Incomplete (Slide 7)",
+        "medonex_today": "Certificates carry an expiry date only. The 'Compliance Documents' block in the candidate view is commented out in the UI.",
+        "status": "Planned",
+        "tickets": ["MEDO-1595"]
+    },
+    {
+        "num": 8,
+        "feature": "Document container: type, alias, state, effective & expiry date, does-not-expire, comments, catalog, archive, versions; PDF/PNG/JPG up to 125 MB (Slide 9)",
+        "medonex_today": "Certification record has name, authority, license number, obtained & expiry dates, file. JPG expiry auto-read and duplicate-name prompt are done. No state, versioning, archive, catalog or document-type list.",
+        "status": "Partial",
+        "tickets": ["MEDO-1595", "MEDO-988"]
+    },
+    {
+        "num": 9,
+        "feature": "Employer and employee can both add documents (Slide 8)",
+        "medonex_today": "Candidates upload their own certificates; recruiters upload on their behalf (done). No employer-admin side.",
+        "status": "Partial",
+        "tickets": ["MEDO-909"]
+    },
+    {
+        "num": 10,
+        "feature": "Document request: choose recipient (provider, admin, external admin) and pick documents by status (Slides 10, 11)",
+        "medonex_today": "Only a manual 'send certificate expiry reminder' button per certificate.",
+        "status": "Planned",
+        "tickets": ["MEDO-1596"]
+    },
+    {
+        "num": 11,
+        "feature": "Reminder cadence on a request: none, every 3 days, weekly (Slide 11)",
+        "medonex_today": "Fixed reminders at 15, 30 and 60 days before expiry by email and SMS. Not user-selectable. Scheduled job is switched off in Dev code.",
+        "status": "Partial",
+        "tickets": ["MEDO-908", "MEDO-1596"]
+    },
+    {
+        "num": 12,
+        "feature": "Expiration alerts and smart notifications (Slide 2)",
+        "medonex_today": "Notification engine (events, templates, queue, email, SMS, in-app) is built and reusable. Expiry alerts depend on the same disabled job.",
+        "status": "Partial",
+        "tickets": ["MEDO-908", "MEDO-183"]
+    },
+    {
+        "num": 13,
+        "feature": "License verification, background checks, exclusions screening (Slide 2, profile tabs 7)",
+        "medonex_today": "None.",
+        "status": "Planned",
+        "tickets": ["MEDO-1704", "MEDO-1725", "MEDO-1358"]
+    },
+    {
+        "num": 14,
+        "feature": "Payer enrollment and the Enrollments tab with pending / approved / rejected / terminated (Slides 2, 7)",
+        "medonex_today": "None.",
+        "status": "No ticket",
+        "tickets": []
+    },
+    {
+        "num": 15,
+        "feature": "Privileges and appointments, Locations Setup, custom provider fields, credentialing packet templates (Profile tabs, side menu)",
+        "medonex_today": "None. Facility credential templates (MEDO-1703) are adjacent but cover requirements, not these screens.",
+        "status": "No ticket",
+        "tickets": ["MEDO-1703"]
+    },
+    {
+        "num": 16,
+        "feature": "LMS: 1,000+ course library, auto-assignment by role, department and location, progress tracking (Slide 2)",
+        "medonex_today": "None. (1,000+ courses is a content problem, not code — solved via free Moodle + AI/SME pipeline).",
+        "status": "Planned",
+        "tickets": ["MEDO-1586", "MEDO-1579"]
+    },
+    {
+        "num": 17,
+        "feature": "AI Compliance Coach (Slide 2)",
+        "medonex_today": "None. A candidate auto-reply bot exists, which is a different job.",
+        "status": "Planned",
+        "tickets": ["MEDO-1597"]
+    },
+    {
+        "num": 18,
+        "feature": "Audit trail, reports, admin dashboard (Side menu, Slide 2)",
+        "medonex_today": "No audit logging in the code. No compliance reports.",
+        "status": "Planned",
+        "tickets": ["MEDO-1305", "MEDO-1710"]
+    },
+    {
+        "num": 19,
+        "feature": "Client organization with locations and departments, each client seeing only its own data (Slides 4, 5)",
+        "medonex_today": "A Supplier record and SupplierId exist on candidates and recruiters, but nothing enforces isolation.",
+        "status": "Planned",
+        "tickets": ["MEDO-1700"]
+    }
+]
+
+CODE_FINDINGS = [
+    {
+        "severity": "P0 CRITICAL SECURITY",
+        "title": "Certificate Endpoints Are Marked [AllowAnonymous]",
+        "detail": "Upload, delete, update, and extract-document actions on the Certificate Controller are exposed as AllowAnonymous in the Dev service branch. Any document feature built on top inherits this PII exposure until MEDO-1756 closes it.",
+        "tickets": ["MEDO-1756"]
+    },
+    {
+        "severity": "HIGH OPERATIONAL BUG",
+        "title": "Scheduled Expiry Reminder Job Is Commented Out",
+        "detail": "Both the hosted reminder service and timer function attribute are commented out in the Dev code, meaning automated 15/30/60-day expiry alerts may not be firing. Must be verified in Prod (matches MEDO-1766).",
+        "tickets": ["MEDO-1766", "MEDO-908"]
+    },
+    {
+        "severity": "P0 COMPLIANCE BLOCKER",
+        "title": "No Audit Trail, No API Role Checks & Open Expiry UI Bugs",
+        "detail": "Zero audit trail logs and zero role checks exist in the API code—both mandatory for employer vendor security reviews. Additionally, the UI 'Compliance Documents' block is commented out and 4 expiry-date display bugs remain open.",
+        "tickets": ["MEDO-1305", "MEDO-134", "MEDO-382", "MEDO-546", "MEDO-92"]
+    }
+]
+
+BUILD_ROADMAP = [
+    {
+        "step": "01",
+        "priority": "Priority 1 • Foundations (P0)",
+        "title": "Security, RBAC Roles, Tenant Isolation & Audit Trail",
+        "why": "Every other MedTrainer feature depends on strict role boundaries, client data isolation, and HIPAA-grade security. Nothing employer-facing should ship without these.",
+        "actions": [
+            "Close [AllowAnonymous] certificate endpoints (MEDO-1756) and implement API audit trail logging (MEDO-1305).",
+            "Add Employer Admin, Employer, and Employee roles on the RBAC matrix (MEDO-1592, MEDO-1313).",
+            "Write tenant isolation design note and enforce SupplierId filtering at the data layer so clients never see each other's staff (MEDO-1700)."
+        ],
+        "tickets": ["MEDO-1756", "MEDO-1305", "MEDO-1592", "MEDO-1313", "MEDO-1700"]
+    },
+    {
+        "step": "02",
+        "priority": "Priority 2 • Roster & Lifecycle",
+        "title": "Employee Center, Enrollment Form, XLSX Import & Lifecycle",
+        "why": "Serves as the primary entry point for employer-side staff onboarding, billing control, and credentialing location tracking.",
+        "actions": [
+            "Build Employee Center roster with Active / Inactive / Deactivated counts and advanced search (MEDO-1593).",
+            "Reuse existing job-view XLSX bulk upload pattern for bulk employee import (MEDO-1593).",
+            "Add activate / deactivate / reactivate workflow with credentialing-location assignment and reason tracking (MEDO-1594)."
+        ],
+        "tickets": ["MEDO-1593", "MEDO-1594"]
+    },
+    {
+        "step": "03",
+        "priority": "Priority 2 • Core Credentialing",
+        "title": "Document Containers & Missing / Active / Expired Dashboard",
+        "why": "The core credentialing screen employers rely on to verify floor-readiness at a glance.",
+        "actions": [
+            "Extend the existing Certification entity instead of starting over: add document type, state, effective date, does-not-expire flag, version history, and archive flag (MEDO-1595).",
+            "Uncomment and upgrade the profile Compliance Documents UI with Missing / Active / Expired / Incomplete status buckets (MEDO-1595)."
+        ],
+        "tickets": ["MEDO-1595", "MEDO-988"]
+    },
+    {
+        "step": "04",
+        "priority": "Priority 2 • Automated Follow-Ups",
+        "title": "Document Requests & Configurable Reminder Cadence",
+        "why": "Eliminates manual recruiter chasing by automating document requests directly over the existing notification engine.",
+        "actions": [
+            "Re-enable and verify the commented-out scheduled expiry reminder job (MEDO-908, MEDO-1766).",
+            "Build document request workflow supporting recipient choice (provider, admin, external admin) and selectable reminder cadences: None, Every 3 Days, or Weekly (MEDO-1596)."
+        ],
+        "tickets": ["MEDO-1596", "MEDO-908", "MEDO-183"]
+    },
+    {
+        "step": "05",
+        "priority": "Priority 3 • Verifications",
+        "title": "Primary-Source License Verification, Background & Exclusions",
+        "why": "Delivers MedTrainer's Verifications and Exclusions tabs (OIG/SAM/State Boards) for automated regulatory clearance.",
+        "actions": [
+            "Evaluate what can be directly reused from the Optevus verification port (MEDO-1624).",
+            "Implement primary-source license verification, background check integration, and exclusion monitoring (MEDO-1704, MEDO-1725, MEDO-1358)."
+        ],
+        "tickets": ["MEDO-1704", "MEDO-1725", "MEDO-1358", "MEDO-1624"]
+    },
+    {
+        "step": "06",
+        "priority": "Priority 3 • LMS, SSO & AI Coach",
+        "title": "Compliance LMS, ADP/UKG Federation & AI Compliance Coach",
+        "why": "Completes full MedTrainer parity once underlying employee and document records exist. 1,000+ courses is a content decision, not a code blocker.",
+        "actions": [
+            "LMS & Assessments (MEDO-1586, MEDO-1579): Leverage our $0 Free Moodle + AI/SME content pipeline to avoid $300–$600/user/yr licensing fees.",
+            "Confirm launch client demand for ADP and UKG SSO federation (MEDO-1592).",
+            "Deploy AI Compliance Coach (MEDO-1597) grounded in real uploaded compliance records and regulatory RAG."
+        ],
+        "tickets": ["MEDO-1586", "MEDO-1579", "MEDO-1592", "MEDO-1597"]
+    }
+]
+
+REUSABLE_ASSETS = [
+    {
+        "icon": "file-badge",
+        "title": "Existing Certification Entity",
+        "desc": "Already stores name, authority, license number, obtained & expiry dates, file, and last reminder level (Extend for MEDO-1595)."
+    },
+    {
+        "icon": "upload-cloud",
+        "title": "Smart Upload & OCR Auto-Read",
+        "desc": "Candidate & recruiter upload paths, automatic JPG expiry-date reading, and duplicate file name detection are Done (MEDO-909, 988, 930)."
+    },
+    {
+        "icon": "bell-ring",
+        "title": "Reusable Notification Engine",
+        "desc": "Events, templates, queue, email, SMS, in-app alerts, and unsubscribe handling are built (MEDO-183). Reminder days sit in a lookup table."
+    },
+    {
+        "icon": "building-2",
+        "title": "SupplierId Tenant Hook & XLSX Import",
+        "desc": "SupplierId already exists on candidates/recruiters for tenant isolation (MEDO-1700), and job XLSX bulk upload is reusable for employees (MEDO-1593)."
+    }
+]
+
 @app.route('/')
 def index():
     return render_template('index.html', stages=STAGES, job=JOB_REQUISITION)
@@ -288,6 +543,17 @@ def dossier():
 @app.route('/windows-guide')
 def windows_guide():
     return render_template('windows_guide.html', stages=STAGES)
+
+@app.route('/gap-analysis')
+def gap_analysis():
+    return render_template(
+        'gap_analysis.html',
+        features=GAP_FEATURES,
+        findings=CODE_FINDINGS,
+        roadmap=BUILD_ROADMAP,
+        reusable=REUSABLE_ASSETS,
+        jira_base=JIRA_BASE_URL
+    )
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5003))
